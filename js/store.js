@@ -6,7 +6,7 @@ var reducers = require('./reducers/reducers');
 
 var store = createStore(reducers);
 //
-// store.dispatch(actions.checkNumber())
+store.dispatch(actions.restartGame())
 store.getState();
 
 module.exports  = store;
