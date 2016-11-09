@@ -30,14 +30,13 @@ const reducer = (state={}, action={}) => {
 				payload.result = 'Did you move to Antarctica- brrrrrr!'
 				
 			} 
+
 			payload.numbers = state.numbers.concat(action.number)
 	
 			return Object.assign({}, state, payload);
 
-
 		case actions.RESTART_GAME:
 			let randomNumber = Math.floor(Math.random() * 100) + 1
-			console.log(randomNumber)
 			return Object.assign({}, state, {result: 'Are you ready for infinite fun?!', randomNumber, guess: 'Your Guesses: ', numbers: []});
 
 		default:

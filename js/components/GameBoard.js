@@ -2,11 +2,20 @@ import React from 'react'
 import actions from '../actions/actions'
 import { connect } from 'react-redux'
 
+/** 
+ * MAX 
+ * Number of lives
+ * @type {Number}
+ */
 const MAX = 11
+
+/** 
+ * Creates GameBoard component that requires a numbers prop 
+ * and result prop
+ */
 const GameBoard = React.createClass({
 	checkNumber: function() {
 		let numberGuess=this.refs.numberGuess.value
-		
 		this.props.dispatch(actions.checkNumber(numberGuess));
 	},
 
@@ -15,8 +24,6 @@ const GameBoard = React.createClass({
 	},
 
 	render: function() {
-		console.log('THIS IS OUR PROPS', this.props)
-		
 		return (
 			<div className='container'>
 
@@ -54,7 +61,6 @@ const GameBoard = React.createClass({
 const mapStateToProps = function(state, props) {
 	return {
 		numbers: state.numbers,
-		defaultGuess: state.guess,
 		result: state.result
 	}
 }
