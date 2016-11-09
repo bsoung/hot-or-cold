@@ -28,7 +28,7 @@ const GameBoard = React.createClass({
 			<div className='container'>
 
 				<div className='title'>
-				Are You Hot or Cold?
+					<span className='red'>Hot</span> or <span className='blue'>Cold</span> ?
 				</div>
 
 				<div className='guesses'>
