@@ -2,7 +2,9 @@ import actions from '../actions/actions'
 import _ from 'lodash'
 
 const reducer = (state={}, action={}) => {
-	let payload = {}
+	let payload = {guesses: ''}
+	
+
 	switch (action.type) {
 		case actions.CHECK_NUMBER:
 			if (state.randomNumber - action.number === 0) {
@@ -24,15 +26,16 @@ const reducer = (state={}, action={}) => {
 				payload['result'] = 'Did you move to Antarctica- brrrrrr!'
 				
 			} 
-			console.log(Object.assign({}))
+			
+			payload.guesses += action.number
+			
 			return Object.assign({}, state, payload);
 
 
 		case actions.RESTART_GAME:
-
 			let randomNumber = Math.floor(Math.random() * 100) + 1
 			console.log(randomNumber)
-			return Object.assign({}, state, {result: 'Are you ready for infinite fun?!', randomNumber});
+			return Object.assign({}, state, {result: 'Are you ready for infinite fun?!', randomNumber, guess: 'Your Guesses: ', guesses: ''});
 
 		default:
 

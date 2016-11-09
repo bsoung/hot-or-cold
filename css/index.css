@@ -23,6 +23,11 @@ html {
 	font-size: 40px;
 }
 
+.guesses {
+	padding: 10px;
+	font-size: 16px;
+}
+
 .input {
 	padding: 10px;
 }

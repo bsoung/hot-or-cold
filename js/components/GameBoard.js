@@ -1,7 +1,9 @@
 import React from 'react'
 import actions from '../actions/actions'
 import { connect } from 'react-redux'
+let numbers = ''
 
+//{this.props.guesses.length === 0 ? this.props.defaultGuess : this.props.guesses.join(' ')}
 const GameBoard = React.createClass({
 	checkNumber: function() {
 		let numberGuess=this.refs.numberGuess.value
@@ -15,14 +17,22 @@ const GameBoard = React.createClass({
 
 	render: function() {
 
-		let numbers = this.props.numbers
 		let test = [{result: 'blah'}]
-
+		// console.log('THIS IS OUR PROPS', this.props)
+		
+		numbers += (' ' + this.props.guesses)
+		console.log(numbers)
+		
+		// console.log(this.props.guesses)
 		return (
 			<div className='container'>
 
 				<div className='title'>
 				Are You Hot or Cold?
+				</div>
+
+				<div className='guesses'>
+					Your Guesses: {numbers}
 				</div>
 
 				<div className='input'>
@@ -50,7 +60,8 @@ const GameBoard = React.createClass({
 
 const mapStateToProps = function(state, props) {
 	return {
-
+		guesses: state.guesses,
+		defaultGuess: state.guess,
 		result: state.result
 	}
 }
