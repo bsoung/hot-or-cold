@@ -57,12 +57,16 @@ const fetchGuessError = (error) => {
 
 //call in diff component
 
-var fetchFewestGuesses = function(guess) {
+var sendFewestGuesses = function(guess) {
 	return function(dispatch) {
 		var url = '/fewest-guesses';
-		return fetch(url).then(function(response) {
+		return fetch(url, {method: 'post', 
+			body: '{"guess": ' + guess + '}', 
+			headers: {'content-type': 'application/json', 'Accept': 'application/json'}})
+			.then(function(response) {
+            
             if (response.status < 200 || response.status >= 300) {
-            	console.log("in first if?")
+          
                 var error = new Error(response.statusText)
                 error.response = response
                 throw error;
@@ -70,15 +74,15 @@ var fetchFewestGuesses = function(guess) {
             return response.json();
         })
         .then(function(data) {
-        	console.log("data here?")
-    		console.log(data)
+      
+    		console.log("response", data)
             var numGuesses = data.guesses; //update
             return dispatch(
-                fetchGuessSuccess(numGuesses) //todo
+                sendGuessSuccess(numGuesses) //todo
             );
         })
         .catch(function(error) {
-        	console.log("error?")
+      
         	return dispatch(
         		fetchGuessError(error) //todo
         	)
@@ -104,8 +108,7 @@ var fetchFewestGuesses = function() {
             return response.json();
         })
         .then(function(data) {
-        	console.log("data here?")
-    		console.log(data)
+        	
             var numGuesses = data.guesses; //update
             return dispatch(
                 fetchGuessSuccess(numGuesses) //todo
@@ -124,15 +127,16 @@ var fetchFewestGuesses = function() {
 
 
 exports.fetchFewestGuesses = fetchFewestGuesses
+exports.sendFewestGuesses = sendFewestGuesses
+
+exports.SEND_GUESSES = SEND_GUESSES
+exports.FETCH_GUESSES = FETCH_GUESSES
 
 exports.CHECK_NUMBER = CHECK_NUMBER
 exports.checkNumber = checkNumber
 
 exports.RESTART_GAME = RESTART_GAME
 exports.restartGame = restartGame
-
-exports.FETCH_GUESSES = FETCH_GUESSES
-exports.fetchGuessSuccess = fetchGuessSuccess
 
 exports.FETCH_ERROR = FETCH_ERROR
 exports.fetchGuessError = fetchGuessError

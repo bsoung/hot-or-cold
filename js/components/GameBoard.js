@@ -34,6 +34,7 @@ class GameBoard extends Component {
 
     	if (!(isNaN(numberGuess))) {
     		this.props.dispatch(actions.checkNumber(numberGuess));
+            this.props.dispatch(actions.sendFewestGuesses(numberGuess));
     	} 
     	
     	this.refs.numberGuess.value = null

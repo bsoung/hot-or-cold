@@ -14,6 +14,7 @@ app.get('/fewest-guesses', function(req, res) {
 })
 
 app.post('/fewest-guesses', function(req, res) {
+	console.log(req.body)
 	guesses = req.body.guesses
 	res.status(201).json(guesses)
 })

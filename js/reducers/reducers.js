@@ -52,6 +52,9 @@ const reducer = (state={}, action={}) => {
 		case actions.FETCH_ERROR:
 			return Object.assign({}, state, {error: action.error})
 
+		case actions.SEND_GUESSES:
+			return Object.assign({}, state, {fetchedGuesses: action.guesses})
+
 		default:
 
 			return state
