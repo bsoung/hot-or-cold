@@ -38,7 +38,19 @@ const reducer = (state={}, action={}) => {
 		case actions.RESTART_GAME:
 			let randomNumber = Math.floor(Math.random() * 100) + 1
 			console.log(randomNumber)
-			return Object.assign({}, state, {result: 'Are you ready for infinite fun?!', randomNumber, guess: 'Your Guesses: ', numbers: [], winState: false});
+			return Object.assign({}, state, {result: 'Are you ready for infinite fun?!', 
+								randomNumber, 
+								guess: 'Your Guesses: ', 
+								numbers: [], 
+								winState: false});
+
+		//more cases for catch //
+		case actions.FETCH_GUESSES:
+			console.log("inside reducer?")
+			return Object.assign({}, state, {fetchedGuesses: action.guesses})
+
+		case actions.FETCH_ERROR:
+			return Object.assign({}, state, {error: action.error})
 
 		default:
 

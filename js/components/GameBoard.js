@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import actions from '../actions/actions'
 import { connect } from 'react-redux'
+import Guesses from './Guesses'
 
 /** 
  * MAX 
@@ -25,6 +26,8 @@ class GameBoard extends Component {
 
         
     }
+
+    //component did mount initializer
 
     checkNumber () {
     	let numberGuess = Math.abs(parseInt(this.refs.numberGuess.value))
@@ -87,7 +90,7 @@ class GameBoard extends Component {
 
     	return (
     		<div className='container'>
-
+                <Guesses />
  				<div className='title'>
  					<span className='red'>Hot</span> or <span className='blue'>Cold</span>
  				</div>
