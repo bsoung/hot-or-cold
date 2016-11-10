@@ -1,16 +1,13 @@
-var redux = require('redux');
-var actions = require('./actions/actions')
-var createStore = redux.createStore;
+import redux from 'redux'
+import actions from './actions/actions'
+import { createStore } from 'redux'
+import reducers from './reducers/reducers'
 
-var reducers = require('./reducers/reducers');
 
-var store = createStore(reducers);
-//
+const store = createStore(reducers);
+
 store.dispatch(actions.restartGame())
 store.getState();
 
 module.exports  = store;
 
-//component
-//var Container = connect(mapsStateToProps)(COMPONENT)
-//

@@ -18,10 +18,10 @@ const checkNumber = (number) => {
  * 
  */
 const RESTART_GAME = 'RESTART_GAME'
-const restartGame = (numbers) => {
+const restartGame = () => {
 	return {
 		type: RESTART_GAME,
-		numbers: numbers
+		numbers: []
 	}
 }
 
