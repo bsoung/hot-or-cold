@@ -13,7 +13,6 @@ const MAX = 10
  * and result prop
  */
 
-// ECMA2015 class 
 class GameBoard extends Component {
 
     constructor (props) {
@@ -21,8 +20,8 @@ class GameBoard extends Component {
 
         this.checkNumber = this.checkNumber.bind(this);
         this.restartGame = this.restartGame.bind(this); // GameBoard or "object"
-        this.checkWinnerLabel = this.checkWinnerLabel.bind(this);
-        this.checkWinnerButton = this.checkWinnerButton.bind(this)
+        this.hideOrShowLabel = this.hideOrShowLabel.bind(this);
+        this.hideOrShowButton = this.hideOrShowButton.bind(this)
     }
 
     checkNumber () {
@@ -43,12 +42,11 @@ class GameBoard extends Component {
     		return;
     	} else {
     		this.refs.numberGuess.value = null
-    		
     	}
     	
     }
 
-    checkWinnerLabel (target, guess, current, max, condition) {
+    hideOrShowLabel (target, guess, current, max, condition) {
     
 	    if (condition === true) {
 	    	console.log('1')
@@ -70,7 +68,8 @@ class GameBoard extends Component {
 	    
     }
 
-    checkWinnerButton (current, max, condition) {
+    hideOrShowButton (current, max, condition) {
+
     	if (current >= max || condition === true) {
     		console.log(current, max)
     		return (
@@ -86,7 +85,7 @@ class GameBoard extends Component {
     }
 
     render() {
-    	console.log(this.props.condition)
+
     	return (
     		<div className='container'>
 
@@ -103,7 +102,7 @@ class GameBoard extends Component {
  				</div>
 
  				<div className='input'>
- 					{this.checkWinnerLabel(this.props.targetNumber, 
+ 					{this.hideOrShowLabel(this.props.targetNumber, 
  					parseInt(this.props.numbers[this.props.numbers.length - 1]), 
  					this.props.numbers.length, 
  					MAX, 
@@ -112,7 +111,7 @@ class GameBoard extends Component {
  				</div>
 
  				<div className='buttons'>
- 					{this.checkWinnerButton(this.props.numbers.length, MAX, this.props.condition)}
+ 					{this.hideOrShowButton(this.props.numbers.length, MAX, this.props.condition)}
  					<button type='button' onClick={this.restartGame}>
  					Restart
  					</button>
@@ -127,7 +126,9 @@ class GameBoard extends Component {
     }
 }
 
+
 const mapStateToProps = (state, props) => {
+
 	return {
 		condition: state.winState,
 		numbers: state.numbers,
