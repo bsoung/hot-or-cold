@@ -25,13 +25,11 @@ class GameBoard extends Component {
     }
 
     checkNumber () {
-    	let numberGuess = this.refs.numberGuess.value
+    	let numberGuess = Math.abs(parseInt(this.refs.numberGuess.value))
 
-    	if (numberGuess !== '') {
+    	if (!(isNaN(numberGuess))) {
     		this.props.dispatch(actions.checkNumber(numberGuess));
-    	} else {
-    		alert("Please enter a number!")
-    	}
+    	} 
     	
     	this.refs.numberGuess.value = null
     }
@@ -61,7 +59,7 @@ class GameBoard extends Component {
 
 	    } else {
 	    	return (
-	    		<input type='number' ref='numberGuess' placeholder='Enter a Number!' />
+	    		<input type='number' ref='numberGuess' placeholder='Enter a Number!' style={{outline: 0}} />
 	    	)
 	    	
 	    }
@@ -77,7 +75,7 @@ class GameBoard extends Component {
     		)
     	} else {
     		return (
-    			<button type='button' onClick={this.checkNumber}>
+    			<button type='button' onClick={this.checkNumber} style={{outline: 0}}>
  				Make a Guess!
  				</button>
     		)
@@ -112,7 +110,7 @@ class GameBoard extends Component {
 
  				<div className='buttons'>
  					{this.hideOrShowButton(this.props.numbers.length, MAX, this.props.condition)}
- 					<button type='button' onClick={this.restartGame}>
+ 					<button type='button' onClick={this.restartGame} style={{outline: 0}}>
  					Restart
  					</button>
  				</div>
