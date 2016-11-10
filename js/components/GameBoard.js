@@ -21,7 +21,9 @@ class GameBoard extends Component {
         this.checkNumber = this.checkNumber.bind(this);
         this.restartGame = this.restartGame.bind(this); // GameBoard or "object"
         this.hideOrShowLabel = this.hideOrShowLabel.bind(this);
-        this.hideOrShowButton = this.hideOrShowButton.bind(this)
+        this.hideOrShowButton = this.hideOrShowButton.bind(this);
+
+        
     }
 
     checkNumber () {
@@ -45,7 +47,7 @@ class GameBoard extends Component {
     }
 
     hideOrShowLabel (target, guess, current, max, condition) {
-    
+    	
 	    if (condition === true) {
 	    	console.log('1')
 	    	return (
@@ -67,7 +69,6 @@ class GameBoard extends Component {
     }
 
     hideOrShowButton (current, max, condition) {
-
     	if (current >= max || condition === true) {
     		console.log(current, max)
     		return (
@@ -75,8 +76,8 @@ class GameBoard extends Component {
     		)
     	} else {
     		return (
-    			<button type='button' onClick={this.checkNumber} style={{outline: 0}}>
- 				Make a Guess!
+    			<button id='enter' type='submit' onClick={this.checkNumber} style={{outline: 0}}>
+ 				Enter
  				</button>
     		)
     	}
