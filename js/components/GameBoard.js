@@ -15,7 +15,7 @@ const MAX = 10
 
 // ECMA2015 class 
 class GameBoard extends Component {
-	
+
     constructor (props) {
         super(props);
 
@@ -27,7 +27,13 @@ class GameBoard extends Component {
 
     checkNumber () {
     	let numberGuess = this.refs.numberGuess.value
-    	this.props.dispatch(actions.checkNumber(numberGuess));
+
+    	if (numberGuess !== '') {
+    		this.props.dispatch(actions.checkNumber(numberGuess));
+    	} else {
+    		alert("Please enter a number!")
+    	}
+    	
     	this.refs.numberGuess.value = null
     }
 
