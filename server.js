@@ -16,6 +16,7 @@ app.get('/fewest-guesses', function(req, res) {
 		console.log("item",item)
 		if (err) {
 			console.error(err)
+			res.status(500).json({message: 'Internal Service Error'})
 		}
 		res.status(200).json({guesses: item.highscore})
 	})
@@ -26,7 +27,8 @@ app.post('/fewest-guesses', function(req, res) {
 	console.log(req.body)
 	HighScore.findOne(function(err, item) {
 		if (err) {
-			//
+			console.error(err)
+			res.status(500).json({message: 'Internal Service Error'})
 		}
 		item.highscore = req.body.guesses
 		item.save(function(err) {
@@ -67,6 +69,7 @@ if (require.main === module) {
     runServer(function(err) {
         if (err) {
             console.error(err);
+            res.status(500).json({message: 'Internal Service Error'})
         }
     });
 };
