@@ -4,7 +4,7 @@
   "description": "A React template",
   "main": "js/index.js",
   "scripts": {
-    "start": "cd build; python -m SimpleHTTPServer 8080",
+    "start": "npm run watch && nodemon server.js",
     "dev": "run-p watch serve",
     "test": "mocha --recursive --compilers js:babel-core/register",
     "build": "run-s build:*",
@@ -66,6 +66,8 @@
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.16.6",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.7",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",

@@ -7,20 +7,20 @@ import { connect } from 'react-redux'
 class Guesses extends Component {
 
 	constructor (props) {
-        super(props);
+        super(props);       
+    }
 
-        
+    // run once when component is bout to mount
+    componentWillMount () {
+        if (this.props.fetchedGuesses === undefined) {
+            this.props.dispatch(actions.fetchFewestGuesses());
+        }
     }
 
     render () {
-    	if (this.props.fetchedGuesses === undefined) {
-    		this.props.dispatch(actions.fetchFewestGuesses());
-    	}
-    	
-    	
     	console.log(this.props)
     	return (
-    		<div>{this.props.fetchedGuesses}</div>
+    		<div className="highscore">Highscore: {this.props.fetchedGuesses === null ? 'No Highscore!' : this.props.fetchedGuesses}</div>
     	)
     }
 

@@ -1,27 +1,83 @@
 'use strict'
 
 let express = require('express');
+var mongoose = require('mongoose');
 let bodyParser = require('body-parser');
-let guesses = 100
+let config = require('./config')
+// highscore
 
 let app = express();
 app.use(bodyParser.json());
 app.use(express.static("build"));
 
+var HighScore = mongoose.model('HighScore', { highscore: Number });
+
 app.get('/fewest-guesses', function(req, res) {
-	console.log('getting it?')
-	res.status(200).json({guesses: guesses})
+	HighScore.findOne(function(err, item) {
+		console.log("item",item)
+		if (err) {
+			console.error(err)
+		}
+		res.status(200).json({guesses: item.highscore})
+	})
+	
 })
 
 app.post('/fewest-guesses', function(req, res) {
 	console.log(req.body)
-	guesses = req.body.guesses
-	res.status(201).json(guesses)
+	HighScore.findOne(function(err, item) {
+		if (err) {
+			//
+		}
+		item.highscore = req.body.guesses
+		item.save(function(err) {
+			if (err) {
+
+			} else {
+				res.status(201).json({guesses: item.highscore})
+			}
+		})
+		
+	})
+	
 })
 
-app.listen(process.env.PORT || 8080, process.env.IP, function() {
-	console.log("Listening");
-})
+var runServer = function(callback) {
+    mongoose.connect(config.DATABASE_URL, function(err) {
+        if (err && callback) {
+            return callback(err);
+        }
+
+		
+		HighScore.findOne(function(err, item) {
+			if (!item) {
+				item = { highscore: null }
+				HighScore.create(item)
+			}
+		})
+
+
+        app.listen(config.PORT, process.env.IP, function() {
+            console.log('Listening on localhost:' + config.PORT);
+            if (callback) {
+                callback();
+            }
+        });
+    });
+};
+
+if (require.main === module) {
+    runServer(function(err) {
+        if (err) {
+            console.error(err);
+        }
+    });
+};
+
+
+
+
+
 
 exports.app = app
 

@@ -33,8 +33,8 @@ class GameBoard extends Component {
     	let numberGuess = Math.abs(parseInt(this.refs.numberGuess.value))
 
     	if (!(isNaN(numberGuess))) {
-    		this.props.dispatch(actions.checkNumber(numberGuess));
-            this.props.dispatch(actions.sendFewestGuesses(numberGuess));
+    		this.props.dispatch(actions.checkNumberTest(numberGuess));
+            
     	} 
     	
     	this.refs.numberGuess.value = null
@@ -53,6 +53,7 @@ class GameBoard extends Component {
     hideOrShowLabel (target, guess, current, max, condition) {
     	
 	    if (condition === true) {
+	    	this.props.dispatch(actions.sendFewestGuesses(current));
 	    	console.log('1')
 	    	return (
 	    			'YOU WON'
@@ -105,11 +106,12 @@ class GameBoard extends Component {
  				</div>
 
  				<div className='input'>
- 					{this.hideOrShowLabel(this.props.targetNumber, 
- 					parseInt(this.props.numbers[this.props.numbers.length - 1]), 
- 					this.props.numbers.length, 
- 					MAX, 
- 					this.props.condition) } 					
+ 					{this.hideOrShowLabel(
+	 					this.props.targetNumber, 
+	 					parseInt(this.props.numbers[this.props.numbers.length - 1]), 
+	 					this.props.numbers.length, 
+	 					MAX, 
+	 					this.props.condition) } 					
 
  				</div>
 

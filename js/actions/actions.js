@@ -6,12 +6,54 @@ require('isomorphic-fetch');
  * 
  */
 const CHECK_NUMBER = 'CHECK_NUMBER'
-const checkNumber = (number) => {
+const checkNumber = (payload) => {
     return {
         type: CHECK_NUMBER,
-        number: number
+        payload
 
     }
+}
+
+const checkNumberTest = (number) => {
+	return (dispatch, getState) => {
+		const payload = {}
+		const state = getState()
+		switch (true) {
+
+			case state.numbers.indexOf(number) !== -1:
+				payload.result = 'You already entered this number!'
+				break
+
+			case state.randomNumber - number === 0:
+				payload.result = 'WINNER WINNER CHICKEN DINNER!'
+				payload.winState = true
+				break
+
+			case Math.abs(state.randomNumber - number) <= 2:
+				payload.result = 'Call the fire department because you\'re on fire!'
+				break
+
+			case Math.abs(state.randomNumber - number) <= 15:
+				payload.result = 'You\'re getting hotter!'
+				break
+
+			case Math.abs(state.randomNumber - number) <= 30:
+				payload.result = 'You\'re reaching room temperature!'
+				break
+
+			case Math.abs(state.randomNumber - number) <= 60:
+				payload.result = 'Grab a jacket because you\'re getting cold!'
+				break
+
+			default:
+				payload.result = 'Did you move to Antarctica- brrrrrr!'
+				break
+		}
+
+		payload.numbers = state.numbers.concat(number)
+		
+		dispatch(checkNumber(payload))
+	}
 }
 
 /** 
@@ -58,15 +100,20 @@ const fetchGuessError = (error) => {
 //call in diff component
 
 var sendFewestGuesses = function(guess) {
-	return function(dispatch) {
+	return function(dispatch, getState) {
+		const state = getState()
+		if (state.fetchedGuesses !== null && state.fetchedGuesses < guess) {
+			return
+		}
+
 		var url = '/fewest-guesses';
 		return fetch(url, {method: 'post', 
-			body: '{"guess": ' + guess + '}', 
+			body: '{"guesses": ' + guess + '}', 
 			headers: {'content-type': 'application/json', 'Accept': 'application/json'}})
-			.then(function(response) {
-            
+		.then(function(response) {
+            console.log("here???")
             if (response.status < 200 || response.status >= 300) {
-          
+          		
                 var error = new Error(response.statusText)
                 error.response = response
                 throw error;
@@ -98,7 +145,8 @@ var fetchFewestGuesses = function() {
 	return function(dispatch) {
 		console.log("in function?")
 		var url = '/fewest-guesses';
-		return fetch(url).then(function(response) {
+		return fetch(url)
+		.then(function(response) {
             if (response.status < 200 || response.status >= 300) {
             	console.log("in first if?")
                 var error = new Error(response.statusText)
@@ -124,7 +172,7 @@ var fetchFewestGuesses = function() {
     }
 }
 
-
+exports.checkNumberTest = checkNumberTest
 
 exports.fetchFewestGuesses = fetchFewestGuesses
 exports.sendFewestGuesses = sendFewestGuesses
