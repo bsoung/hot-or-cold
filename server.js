@@ -33,7 +33,7 @@ app.post('/fewest-guesses', function(req, res) {
 		item.highscore = req.body.guesses
 		item.save(function(err) {
 			if (err) {
-
+				console.error(err)
 			} else {
 				res.status(201).json({guesses: item.highscore})
 			}
