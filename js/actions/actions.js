@@ -1,4 +1,4 @@
-require('isomorphic-fetch');
+import 'isomorphic-fetch'
 
 /** 
  * CHECK_NUMBER 
@@ -99,69 +99,62 @@ const fetchGuessError = (error) => {
 
 //call in diff component
 
-var sendFewestGuesses = function(guess) {
-	return function(dispatch, getState) {
+const sendFewestGuesses = (guess) => {
+	return (dispatch, getState) => {
 		const state = getState()
 		if (state.fetchedGuesses !== null && state.fetchedGuesses < guess) {  // reverse < for debugging
 			return
 		}
 
-		var url = '/fewest-guesses';
+		const url = '/fewest-guesses';
 		return fetch(url, {method: 'post', 
 			body: '{"guesses": ' + guess + '}', 
 			headers: {'content-type': 'application/json', 'Accept': 'application/json'}})
-		.then(function(response) {
-            console.log("here???")
+		.then((response) => {
+
             if (response.status < 200 || response.status >= 300) {
-          		
-                var error = new Error(response.statusText)
+                const error = new Error(response.statusText)
                 error.response = response
                 throw error;
             }
             return response.json();
         })
-        .then(function(data) {
-      
-    		console.log("response", data)
-            var numGuesses = data.guesses; //update
+        .then((data) => {
+            const numGuesses = data.guesses; 
             return dispatch(
-                sendGuessSuccess(numGuesses) //todo
+                sendGuessSuccess(numGuesses) 
             );
         })
-        .catch(function(error) {
-      
+        .catch((error) => {
         	return dispatch(
-        		fetchGuessError(error) //todo
+        		fetchGuessError(error) 
         	)
         })
 
     }
 }
 
-var fetchFewestGuesses = function() {
-	console.log('here?')
-	return function(dispatch) {
-		console.log("in function?")
-		var url = '/fewest-guesses';
+const fetchFewestGuesses = () => {
+	return (dispatch) => {
+
+		const url = '/fewest-guesses';
 		return fetch(url)
-		.then(function(response) {
+		.then((response) => {
             if (response.status < 200 || response.status >= 300) {
-            	console.log("in first if?")
-                var error = new Error(response.statusText)
+                const error = new Error(response.statusText)
                 error.response = response
                 throw error;
             }
             return response.json();
         })
-        .then(function(data) {
+        .then((data) => {
         	
-            var numGuesses = data.guesses; //update
+            const numGuesses = data.guesses; //update
             return dispatch(
                 fetchGuessSuccess(numGuesses) //todo
             );
         })
-        .catch(function(error) {
-        	console.log("error?")
+        .catch((error) => {
         	return dispatch(
         		fetchGuessError(error) //todo
         	)

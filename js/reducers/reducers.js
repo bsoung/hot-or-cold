@@ -9,10 +9,10 @@ const initialState = {
 }
 
 const reducer = (state={}, action={}) => {
-	let payload = {}
+	const payload = {}
 	
 	switch (action.type) {
-		
+
 		case actions.RESTART_GAME:
 			initialState.randomNumber  = Math.floor(Math.random() * 100) + 1
 			console.log(initialState)

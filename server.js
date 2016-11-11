@@ -1,19 +1,18 @@
 'use strict'
 
-let express = require('express');
-var mongoose = require('mongoose');
-let bodyParser = require('body-parser');
-let config = require('./config')
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const config = require('./config')
 
-let app = express();
-app.use(bodyParser.json());
+const app = express();
+const jsonParser = bodyParser.json()
 app.use(express.static("build"));
 
-var HighScore = mongoose.model('HighScore', { highscore: Number });
+const HighScore = mongoose.model('HighScore', { highscore: Number });
 
-app.get('/fewest-guesses', function(req, res) {
-	HighScore.findOne(function(err, item) {
-		console.log("item",item)
+app.get('/fewest-guesses', (req, res) => {
+	HighScore.findOne((err, item) => {
 		if (err) {
 			console.error(err)
 			res.status(500).json({message: 'Internal Service Error'})
@@ -23,15 +22,15 @@ app.get('/fewest-guesses', function(req, res) {
 	
 })
 
-app.post('/fewest-guesses', function(req, res) {
-	console.log(req.body)
-	HighScore.findOne(function(err, item) {
+app.post('/fewest-guesses', jsonParser, (req, res) => {
+	HighScore.findOne((err, item) => {
 		if (err) {
 			console.error(err)
 			res.status(500).json({message: 'Internal Service Error'})
 		}
+
 		item.highscore = req.body.guesses
-		item.save(function(err) {
+		item.save((err) => {
 			if (err) {
 				console.error(err)
 			} else {
@@ -43,20 +42,20 @@ app.post('/fewest-guesses', function(req, res) {
 	
 })
 
-var runServer = function(callback) {
-    mongoose.connect(config.DATABASE_URL, function(err) {
+const runServer = (callback) => {
+    mongoose.connect(config.DATABASE_URL, (err) => {
         if (err && callback) {
             return callback(err);
         }
 
-		HighScore.findOne(function(err, item) {
+		HighScore.findOne((err, item) => {
 			if (!item) {
 				item = { highscore: null }
 				HighScore.create(item)
 			}
 		})
 
-        app.listen(config.PORT, process.env.IP, function() {
+        app.listen(config.PORT, process.env.IP, () => {
             console.log('Listening on localhost:' + config.PORT);
             if (callback) {
                 callback();
@@ -66,7 +65,7 @@ var runServer = function(callback) {
 };
 
 if (require.main === module) {
-    runServer(function(err) {
+    runServer((err) => {
         if (err) {
             console.error(err);
             res.status(500).json({message: 'Internal Service Error'})

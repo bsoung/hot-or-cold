@@ -1,13 +1,14 @@
-var redux = require('redux')
-var createStore = redux.createStore;
-var applyMiddleware = redux.applyMiddleware;
+// weird bug with ES6 import for redux and middleware
+const redux = require('redux')
+const createStore = redux.createStore;
+const applyMiddleware = redux.applyMiddleware;
 
 import actions from './actions/actions'
 import reducers from './reducers/reducers'
 
-var thunk = require('redux-thunk').default;
+const thunk = require('redux-thunk').default;
 
-var store = redux.createStore(reducers, redux.applyMiddleware(thunk));
+const store = redux.createStore(reducers, redux.applyMiddleware(thunk));
 
 store.dispatch(actions.restartGame()) //todo try commenting it out
 store.getState();
