@@ -102,7 +102,7 @@ const fetchGuessError = (error) => {
 var sendFewestGuesses = function(guess) {
 	return function(dispatch, getState) {
 		const state = getState()
-		if (state.fetchedGuesses !== null && state.fetchedGuesses < guess) {
+		if (state.fetchedGuesses !== null && state.fetchedGuesses < guess) {  // reverse < for debugging
 			return
 		}
 
@@ -137,8 +137,6 @@ var sendFewestGuesses = function(guess) {
 
     }
 }
-
-
 
 var fetchFewestGuesses = function() {
 	console.log('here?')

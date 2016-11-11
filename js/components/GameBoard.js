@@ -8,7 +8,7 @@ import Guesses from './Guesses'
  * Number of lives
  * @type {Number}
  */
-const MAX = 10
+const MAX = 15
 /** 
  * Creates GameBoard component that requires a numbers prop 
  * and result prop
@@ -23,8 +23,6 @@ class GameBoard extends Component {
         this.restartGame = this.restartGame.bind(this); // GameBoard or "object"
         this.hideOrShowLabel = this.hideOrShowLabel.bind(this);
         this.hideOrShowButton = this.hideOrShowButton.bind(this);
-
-        
     }
 
     //component did mount initializer
@@ -56,8 +54,9 @@ class GameBoard extends Component {
 	    	this.props.dispatch(actions.sendFewestGuesses(current));
 	    	console.log('1')
 	    	return (
-	    			'YOU WON'
-	    		)
+	    		'YOU WON'
+	    	)
+
 	    } else if (current >= max) {
 	    	console.log('2')
 	    	return (
@@ -68,12 +67,13 @@ class GameBoard extends Component {
 	    	return (
 	    		<input type='number' ref='numberGuess' placeholder='Enter a Number!' style={{outline: 0}} />
 	    	)
-	    	
+
 	    }
 	    
     }
 
     hideOrShowButton (current, max, condition) {
+
     	if (current >= max || condition === true) {
     		console.log(current, max)
     		return (
@@ -82,7 +82,7 @@ class GameBoard extends Component {
     	} else {
     		return (
     			<button id='enter' type='submit' onClick={this.checkNumber} style={{outline: 0}}>
- 				Enter
+ 				enter
  				</button>
     		)
     	}
@@ -98,11 +98,11 @@ class GameBoard extends Component {
  				</div>
 
  				<div className='lives'>
- 					Lives: {MAX - this.props.numbers.length}
+ 					lives: {MAX - this.props.numbers.length}
  				</div>
 
  				<div className='guesses'>
- 					Guesses: {this.props.numbers.join(' ')}
+ 					guesses: {this.props.numbers.join(' ')}
  				</div>
 
  				<div className='input'>
@@ -112,13 +112,12 @@ class GameBoard extends Component {
 	 					this.props.numbers.length, 
 	 					MAX, 
 	 					this.props.condition) } 					
-
  				</div>
 
  				<div className='buttons'>
  					{this.hideOrShowButton(this.props.numbers.length, MAX, this.props.condition)}
  					<button type='button' onClick={this.restartGame} style={{outline: 0}}>
- 					Restart
+ 					restart
  					</button>
  				</div>
 
@@ -130,7 +129,6 @@ class GameBoard extends Component {
     	)
     }
 }
-
 
 const mapStateToProps = (state, props) => {
 

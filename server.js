@@ -4,7 +4,6 @@ let express = require('express');
 var mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let config = require('./config')
-// highscore
 
 let app = express();
 app.use(bodyParser.json());
@@ -48,14 +47,12 @@ var runServer = function(callback) {
             return callback(err);
         }
 
-		
 		HighScore.findOne(function(err, item) {
 			if (!item) {
 				item = { highscore: null }
 				HighScore.create(item)
 			}
 		})
-
 
         app.listen(config.PORT, process.env.IP, function() {
             console.log('Listening on localhost:' + config.PORT);
@@ -74,12 +71,4 @@ if (require.main === module) {
     });
 };
 
-
-
-
-
-
 exports.app = app
-
-//npm run build
-//npm run serve

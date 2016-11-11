@@ -12,7 +12,7 @@ const reducer = (state={}, action={}) => {
 	let payload = {}
 	
 	switch (action.type) {
-
+		
 		case actions.RESTART_GAME:
 			initialState.randomNumber  = Math.floor(Math.random() * 100) + 1
 			console.log(initialState)
@@ -21,7 +21,6 @@ const reducer = (state={}, action={}) => {
 		case actions.CHECK_NUMBER:
 			return Object.assign({}, state, action.payload)
 
-		//more cases for catch //
 		case actions.FETCH_GUESSES:
 			return Object.assign({}, state, {fetchedGuesses: action.guesses})
 
@@ -32,7 +31,6 @@ const reducer = (state={}, action={}) => {
 			return Object.assign({}, state, {fetchedGuesses: action.guesses})
 
 		default:
-
 			return state
 
 	}

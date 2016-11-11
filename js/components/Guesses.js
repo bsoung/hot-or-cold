@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import actions from '../actions/actions'
 import { connect } from 'react-redux'
 
-
-
 class Guesses extends Component {
 
 	constructor (props) {
@@ -20,13 +18,11 @@ class Guesses extends Component {
     render () {
     	console.log(this.props)
     	return (
-    		<div className="highscore">Highscore: {this.props.fetchedGuesses === null ? 'No Highscore!' : this.props.fetchedGuesses}</div>
+    		<div className="highscore">highscore: {this.props.fetchedGuesses === null ? 'No Highscore!' : this.props.fetchedGuesses}</div>
     	)
     }
 
-
 }
-
 
 const mapStateToProps = (state, props) => {
 
